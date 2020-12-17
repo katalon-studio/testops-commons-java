@@ -38,7 +38,7 @@ public class TestRunResult {
   @JsonProperty("end")
   private Boolean end = null;
 
-  public com.katalon.testops.model.TestRunResult name(String name) {
+  public TestRunResult name(String name) {
     this.name = name;
     return this;
   }
@@ -56,7 +56,7 @@ public class TestRunResult {
     this.name = name;
   }
 
-  public com.katalon.testops.model.TestRunResult status(String status) {
+  public TestRunResult status(String status) {
     this.status = status;
     return this;
   }
@@ -74,7 +74,7 @@ public class TestRunResult {
     this.status = status;
   }
 
-  public com.katalon.testops.model.TestRunResult sessionId(String sessionId) {
+  public TestRunResult sessionId(String sessionId) {
     this.sessionId = sessionId;
     return this;
   }
@@ -92,7 +92,7 @@ public class TestRunResult {
     this.sessionId = sessionId;
   }
 
-  public com.katalon.testops.model.TestRunResult testSuiteId(String testSuiteId) {
+  public TestRunResult testSuiteId(String testSuiteId) {
     this.testSuiteId = testSuiteId;
     return this;
   }
@@ -110,7 +110,7 @@ public class TestRunResult {
     this.testSuiteId = testSuiteId;
   }
 
-  public com.katalon.testops.model.TestRunResult end(Boolean end) {
+  public TestRunResult end(Boolean end) {
     this.end = end;
     return this;
   }
@@ -137,7 +137,7 @@ public class TestRunResult {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    com.katalon.testops.model.TestRunResult testRunResult = (com.katalon.testops.model.TestRunResult) o;
+    TestRunResult testRunResult = (TestRunResult) o;
     return Objects.equals(this.name, testRunResult.name) &&
         Objects.equals(this.status, testRunResult.status) &&
         Objects.equals(this.sessionId, testRunResult.sessionId) &&

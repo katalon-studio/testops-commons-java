@@ -3,12 +3,19 @@ package com.katalon.testops;
 import com.katalon.testops.core.web.ApiClient;
 import com.katalon.testops.core.web.api.TestReportApi;
 import com.katalon.testops.core.web.model.UploadBatchFileResource;
+import com.katalon.testops.helper.HttpHelper;
+import com.katalon.testops.helper.LogHelper;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPut;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,5 +54,23 @@ public class TestOpsConnector {
 
         UrlResource body = new UrlResource(fileUri);
         apiClient.makeRequest(url, HttpMethod.PUT, body, headerParams, null, accept, contentType, returnType);
+    }
+
+    public void uploadFile(String url, File file) throws Exception {
+        try (InputStream content = new FileInputStream(file)) {
+            HttpPut httpPut = new HttpPut(url);
+            HttpResponse httpResponse = HttpHelper.sendRequest(
+                    httpPut,
+                    null,
+                    null,
+                    null,
+                    content,
+                    file.length(),
+                    null);
+            LogHelper.getLogger().info(httpResponse.getStatusLine().getStatusCode() + " " + url);
+        } catch (Exception e) {
+            LogHelper.getLogger().error("Cannot send data to server: " + url, e);
+            throw e;
+        }
     }
 }
