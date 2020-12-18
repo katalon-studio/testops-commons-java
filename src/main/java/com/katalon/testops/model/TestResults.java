@@ -2,7 +2,7 @@ package com.katalon.testops.model;
 
 import java.util.Collection;
 
-public class TestCases implements IReport {
+public class TestResults implements IReport {
 
     private Collection<TestResult> testCases;
 

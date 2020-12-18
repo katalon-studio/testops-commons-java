@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.katalon.testops.helper.ObjectMapperSingleton;
 import com.katalon.testops.model.Execution;
 import com.katalon.testops.model.Metadata;
-import com.katalon.testops.model.TestCases;
+import com.katalon.testops.model.TestResults;
 import com.katalon.testops.model.TestSuites;
 
 import java.io.IOException;
@@ -46,16 +46,16 @@ public class TestOpsReportGenerator implements ReportGenerator {
     @Override
     public void write(TestSuites testSuites) {
         try {
-            write(testSuites, "testsuites" + REPORT_FILE_EXTENSION);
+            write(testSuites, "suites" + REPORT_FILE_EXTENSION);
         } catch (IOException e) {
             throw new RuntimeException("Unable to write TestOps test suites", e);
         }
     }
 
     @Override
-    public void write(TestCases testCases) {
+    public void write(TestResults testResults) {
         try {
-            write(testCases, "testcases" + REPORT_FILE_EXTENSION);
+            write(testResults, "results" + REPORT_FILE_EXTENSION);
         } catch (IOException e) {
             throw new RuntimeException("Unable to write TestOps test cases", e);
         }

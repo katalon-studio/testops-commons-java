@@ -4,6 +4,8 @@ public class TestSuite implements IReport, WithUuid {
 
     private String uuid;
 
+    private String parentUuid;
+
     private String name;
 
     private String description;
@@ -16,12 +18,22 @@ public class TestSuite implements IReport, WithUuid {
 
     private Long duration;
 
+    @Override
     public String getUuid() {
         return uuid;
     }
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
+    }
+
+    @Override
+    public String getParentUuid() {
+        return parentUuid;
+    }
+
+    public void setParentUuid(String parentUuid) {
+        this.parentUuid = parentUuid;
     }
 
     public String getName() {

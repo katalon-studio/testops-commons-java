@@ -21,6 +21,11 @@ public class Execution implements IReport, WithUuid {
         this.uuid = uuid;
     }
 
+    @Override
+    public String getParentUuid() {
+        return "";
+    }
+
     public Status getStatus() {
         return status;
     }

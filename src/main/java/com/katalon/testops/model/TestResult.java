@@ -6,9 +6,9 @@ public class TestResult implements IReport, WithUuid {
 
     private String uuid;
 
-    private String name;
+    private String parentUuid;
 
-    private String fullName;
+    private String name;
 
     private String suiteName;
 
@@ -28,6 +28,7 @@ public class TestResult implements IReport, WithUuid {
 
     private Long duration;
 
+    @Override
     public String getUuid() {
         return uuid;
     }
@@ -36,20 +37,21 @@ public class TestResult implements IReport, WithUuid {
         this.uuid = uuid;
     }
 
+    @Override
+    public String getParentUuid() {
+        return parentUuid;
+    }
+
+    public void setParentUuid(String parentUuid) {
+        this.parentUuid = parentUuid;
+    }
+
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getSuiteName() {

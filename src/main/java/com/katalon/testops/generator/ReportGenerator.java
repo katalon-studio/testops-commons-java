@@ -8,7 +8,7 @@ public interface ReportGenerator {
 
     void write(TestSuites testSuites);
 
-    void write(TestCases testCases);
+    void write(TestResults testResults);
 
     void write(Metadata metadata);
 }

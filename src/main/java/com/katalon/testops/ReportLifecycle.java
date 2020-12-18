@@ -43,8 +43,8 @@ public class ReportLifecycle {
         return new TestOpsReportGenerator(outputDirectory);
     }
 
-    private static TestCases createTestCases(Collection<TestResult> testResults) {
-        TestCases testCases = new TestCases();
+    private static TestResults createTestCases(Collection<TestResult> testResults) {
+        TestResults testCases = new TestResults();
         testCases.setTestCases(testResults);
         return testCases;
     }
@@ -64,6 +64,9 @@ public class ReportLifecycle {
 
     public void startSuite(TestSuite testSuite, String uuid) {
         testSuite.setUuid(uuid);
+        getCurrentExecution().ifPresent(execution -> {
+            testSuite.setParentUuid(execution.getUuid());
+        });
         testSuite.setStart(System.currentTimeMillis());
         reportStorage.put(testSuite.getUuid(), testSuite);
     }
@@ -82,7 +85,7 @@ public class ReportLifecycle {
     }
 
     public void stopExecution() {
-        Optional<Execution> optionalExecution = reportStorage.get(currentExecution.get(), Execution.class);
+        Optional<Execution> optionalExecution = getCurrentExecution();
         optionalExecution.ifPresent(execution -> {
             execution.setStop(System.currentTimeMillis());
             execution.setDuration(execution.getStop() - execution.getStart());
@@ -92,9 +95,10 @@ public class ReportLifecycle {
     }
 
     public void writeExecutionReport() {
-        Optional<Execution> optionalExecution = reportStorage.get(currentExecution.get(), Execution.class);
+        Optional<Execution> optionalExecution = getCurrentExecution();
         optionalExecution.ifPresent(reportGenerator::write);
         reportStorage.remove(currentExecution.get());
+        currentExecution.remove();
     }
 
     public void writeTestSuitesReport() {
@@ -103,14 +107,18 @@ public class ReportLifecycle {
         clearSuites();
     }
 
-    public void writeTestCasesReport() {
-        TestCases testCases = createTestCases(testResults);
-        reportGenerator.write(testCases);
+    public void writeTestResultsReport() {
+        TestResults testResults = createTestCases(this.testResults);
+        reportGenerator.write(testResults);
         clearTestResults();
     }
 
     public void writeMetadata(Metadata metadata) {
         reportGenerator.write(metadata);
+    }
+
+    private Optional<Execution> getCurrentExecution() {
+        return reportStorage.get(currentExecution.get(), Execution.class);
     }
 
     private Status getExecutionStatusFromTestResults(Collection<TestResult> testResults) {
