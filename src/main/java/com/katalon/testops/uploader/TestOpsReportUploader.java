@@ -49,7 +49,7 @@ public class TestOpsReportUploader implements ReportUploader {
     public Optional<UploadBatchFileResource> uploadFile(FileResource info, Path path, boolean isEnd) {
         UploadBatchFileResource uploadBatchFileResource = new UploadBatchFileResource();
         try {
-            testOpsConnector.uploadFile2(info.getUploadUrl(), path.toUri());
+            testOpsConnector.uploadFile(info.getUploadUrl(), path.toUri());
             uploadBatchFileResource.setFileName(path.getFileName().toString());
             uploadBatchFileResource.setFolderPath(path.getParent().toString());
             uploadBatchFileResource.setUploadedPath(info.getPath());

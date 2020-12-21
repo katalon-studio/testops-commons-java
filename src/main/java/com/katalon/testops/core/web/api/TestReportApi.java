@@ -4,7 +4,7 @@ import com.katalon.testops.core.web.ApiClient;
 import com.katalon.testops.core.web.model.ExecutionResource;
 import com.katalon.testops.core.web.model.UploadBatchFileResource;
 import com.katalon.testops.core.web.model.UploadBatchResource;
-import com.katalon.testops.model.TestRunResult;
+import com.katalon.testops.core.web.model.TestRunResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;

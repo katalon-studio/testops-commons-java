@@ -1,24 +1,19 @@
 package com.katalon.testops;
 
+import com.katalon.testops.core.HttpClientBuilder;
 import com.katalon.testops.core.web.ApiClient;
+import com.katalon.testops.core.web.api.FileApi;
 import com.katalon.testops.core.web.api.TestReportApi;
+import com.katalon.testops.core.web.model.FileResource;
 import com.katalon.testops.core.web.model.UploadBatchFileResource;
-import com.katalon.testops.helper.HttpHelper;
-import com.katalon.testops.helper.LogHelper;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPut;
-import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.http.RequestEntity;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.List;
 
 public class TestOpsConnector {
@@ -29,8 +24,13 @@ public class TestOpsConnector {
         this.apiClient = apiClient;
     }
 
+    public List<FileResource> getUploadUrls(Long projectId, long numberUrl) {
+        FileApi api = new FileApi(apiClient);
+        return api.getUploadUrls(projectId, numberUrl);
+    }
+
     public void uploadJunitFileInfo(
-            long projectId,
+            Long projectId,
             String batch,
             String folderName,
             String fileName,
@@ -45,32 +45,18 @@ public class TestOpsConnector {
         api.processTestOpsReports(body, projectId, batch);
     }
 
-    public void uploadFile(String url, URI fileUri) throws MalformedURLException, URISyntaxException {
-        MediaType contentType = MediaType.APPLICATION_OCTET_STREAM;
-        final HttpHeaders headerParams = new HttpHeaders();
-        ParameterizedTypeReference<Void> returnType = new ParameterizedTypeReference<Void>() {
-        };
-        final List<MediaType> accept = apiClient.selectHeaderAccept(new String[]{});
+    public void uploadFile(String url, URI fileUri) throws Exception {
+        URI uri = new URI(url);
 
+        final RequestEntity.BodyBuilder requestBuilder = RequestEntity.method(HttpMethod.PUT, uri);
+        requestBuilder.contentType(MediaType.APPLICATION_OCTET_STREAM);
+        requestBuilder.headers(new HttpHeaders());
         UrlResource body = new UrlResource(fileUri);
-        apiClient.makeRequest(url, HttpMethod.PUT, body, headerParams, null, accept, contentType, returnType);
-    }
+        RequestEntity<Object> requestEntity = requestBuilder.body(body);
 
-    public void uploadFile(String url, File file) throws Exception {
-        try (InputStream content = new FileInputStream(file)) {
-            HttpPut httpPut = new HttpPut(url);
-            HttpResponse httpResponse = HttpHelper.sendRequest(
-                    httpPut,
-                    null,
-                    null,
-                    null,
-                    content,
-                    file.length(),
-                    null);
-            LogHelper.getLogger().info(httpResponse.getStatusLine().getStatusCode() + " " + url);
-        } catch (Exception e) {
-            LogHelper.getLogger().error("Cannot send data to server: " + url, e);
-            throw e;
-        }
+        RestTemplate restTemplate = HttpClientBuilder
+                .create()
+                .build();
+        restTemplate.exchange(requestEntity, Void.class);
     }
 }

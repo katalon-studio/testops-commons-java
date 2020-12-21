@@ -1,7 +1,8 @@
-package com.katalon.testops.core.web;
+package com.katalon.testops.core;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.threetenbp.ThreeTenModule;
+import com.katalon.testops.core.web.CustomInstantDeserializer;
 import org.springframework.http.client.BufferingClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
