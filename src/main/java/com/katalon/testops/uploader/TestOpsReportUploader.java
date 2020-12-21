@@ -1,11 +1,11 @@
 package com.katalon.testops.uploader;
 
 import com.katalon.testops.TestOpsConnector;
+import com.katalon.testops.api.ApiClient;
+import com.katalon.testops.api.model.FileResource;
+import com.katalon.testops.api.model.UploadBatchFileResource;
 import com.katalon.testops.configuration.Configuration;
 import com.katalon.testops.core.HttpClientBuilder;
-import com.katalon.testops.core.web.ApiClient;
-import com.katalon.testops.core.web.model.FileResource;
-import com.katalon.testops.core.web.model.UploadBatchFileResource;
 import com.katalon.testops.helper.FileHelper;
 import com.katalon.testops.helper.GeneratorHelper;
 import com.katalon.testops.helper.LogHelper;

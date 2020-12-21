@@ -156,6 +156,17 @@
         </profile>
     </profiles>
 
+    <repositories>
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
@@ -201,6 +212,11 @@
             <version>${testng-version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>com.katalon</groupId>
+            <artifactId>testops-api</artifactId>
+            <version>${testops-api-version}</version>
+        </dependency>
     </dependencies>
 
     <properties>
@@ -225,5 +241,6 @@
         <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
         <junit-version>4.13.1</junit-version>
         <testng-version>7.3.0</testng-version>
+        <testops-api-version>0.0.1-SNAPSHOT</testops-api-version>
     </properties>
 </project>

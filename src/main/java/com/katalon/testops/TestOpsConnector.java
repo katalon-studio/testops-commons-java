@@ -1,11 +1,11 @@
 package com.katalon.testops;
 
+import com.katalon.testops.api.ApiClient;
+import com.katalon.testops.api.api.FileApi;
+import com.katalon.testops.api.api.TestReportApi;
+import com.katalon.testops.api.model.FileResource;
+import com.katalon.testops.api.model.UploadBatchFileResource;
 import com.katalon.testops.core.HttpClientBuilder;
-import com.katalon.testops.core.web.ApiClient;
-import com.katalon.testops.core.web.api.FileApi;
-import com.katalon.testops.core.web.api.TestReportApi;
-import com.katalon.testops.core.web.model.FileResource;
-import com.katalon.testops.core.web.model.UploadBatchFileResource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -42,7 +42,7 @@ public class TestOpsConnector {
 
     public void uploadTestOpsReport(List<UploadBatchFileResource> body, Long projectId, String batch) {
         TestReportApi api = new TestReportApi(apiClient);
-        api.processTestOpsReports(body, projectId, batch);
+        api.processTestOpsReports(projectId, batch, body);
     }
 
     public void uploadFile(String url, URI fileUri) throws Exception {
