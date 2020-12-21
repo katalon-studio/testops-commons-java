@@ -169,12 +169,6 @@
             <version>${sl4j-version}</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.katalon.testops</groupId>
-            <artifactId>common</artifactId>
-            <version>${testops-common-version}</version>
-            <scope>compile</scope>
-        </dependency>
 
         <!-- HTTP client: Spring RestTemplate -->
         <dependency>
