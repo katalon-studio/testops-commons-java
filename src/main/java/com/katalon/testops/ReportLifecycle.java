@@ -1,25 +1,27 @@
 package com.katalon.testops;
 
+import com.katalon.testops.configuration.Configuration;
+import com.katalon.testops.configuration.ConfigurationCreator;
+import com.katalon.testops.configuration.TestOpsConfigurationCreator;
 import com.katalon.testops.generator.ReportGenerator;
 import com.katalon.testops.generator.TestOpsReportGenerator;
 import com.katalon.testops.helper.GeneratorHelper;
-import com.katalon.testops.helper.ParameterHelper;
 import com.katalon.testops.model.*;
+import com.katalon.testops.uploader.ReportUploader;
+import com.katalon.testops.uploader.TestOpsReportUploader;
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
-
-import static com.katalon.testops.core.Constants.TESTOPS_RESULTS_DIRECTORY;
-import static com.katalon.testops.core.Constants.TESTOPS_RESULTS_DIRECTORY_DEFAULT;
 
 public class ReportLifecycle {
 
     private final ReportStorage reportStorage;
 
     private final ReportGenerator reportGenerator;
+
+    private final ReportUploader reportUploader;
 
     private final ThreadLocal<String> currentExecution = ThreadLocal.withInitial(GeneratorHelper::generateUniqueValue);
 
@@ -28,19 +30,26 @@ public class ReportLifecycle {
     private final Collection<TestSuite> suites = new ConcurrentLinkedQueue<>();
 
     public ReportLifecycle() {
-        this(getDefaultWriter());
+        ConfigurationCreator configurationCreator = new TestOpsConfigurationCreator();
+        Configuration configuration = configurationCreator.createConfiguration();
+        this.reportStorage = new ReportStorage();
+        this.reportGenerator = getDefaultGenerator(configuration);
+        this.reportUploader = getDefaultUploader(configuration);
     }
 
-    public ReportLifecycle(ReportGenerator reportGenerator) {
+    public ReportLifecycle(ReportGenerator reportGenerator, ReportUploader reportUploader) {
         this.reportStorage = new ReportStorage();
         this.reportGenerator = reportGenerator;
+        this.reportUploader = reportUploader;
     }
 
-    private static ReportGenerator getDefaultWriter() {
-        String outputDirectoryParam = Optional.ofNullable(ParameterHelper.get(TESTOPS_RESULTS_DIRECTORY))
-                .orElse(TESTOPS_RESULTS_DIRECTORY_DEFAULT);
-        Path outputDirectory = Paths.get(outputDirectoryParam);
+    private static ReportGenerator getDefaultGenerator(Configuration configuration) {
+        Path outputDirectory = configuration.getResultsDirectory();
         return new TestOpsReportGenerator(outputDirectory);
+    }
+
+    private static ReportUploader getDefaultUploader(Configuration configuration) {
+        return new TestOpsReportUploader(configuration);
     }
 
     private static TestResults createTestCases(Collection<TestResult> testResults) {
@@ -64,9 +73,7 @@ public class ReportLifecycle {
 
     public void startSuite(TestSuite testSuite, String uuid) {
         testSuite.setUuid(uuid);
-        getCurrentExecution().ifPresent(execution -> {
-            testSuite.setParentUuid(execution.getUuid());
-        });
+        getCurrentExecution().ifPresent(execution -> testSuite.setParentUuid(execution.getUuid()));
         testSuite.setStart(System.currentTimeMillis());
         reportStorage.put(testSuite.getUuid(), testSuite);
     }
@@ -115,6 +122,10 @@ public class ReportLifecycle {
 
     public void writeMetadata(Metadata metadata) {
         reportGenerator.write(metadata);
+    }
+
+    public void upload() {
+        reportUploader.upload();
     }
 
     private Optional<Execution> getCurrentExecution() {
