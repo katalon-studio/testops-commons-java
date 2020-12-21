@@ -45,7 +45,7 @@ public class ReportLifecycle {
 
     private static TestResults createTestCases(Collection<TestResult> testResults) {
         TestResults testCases = new TestResults();
-        testCases.setTestCases(testResults);
+        testCases.setResults(testResults);
         return testCases;
     }
 

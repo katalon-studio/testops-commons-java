@@ -4,13 +4,13 @@ import java.util.Collection;
 
 public class TestResults implements IReport {
 
-    private Collection<TestResult> testCases;
+    private Collection<TestResult> results;
 
-    public Collection<TestResult> getTestCases() {
-        return testCases;
+    public Collection<TestResult> getResults() {
+        return results;
     }
 
-    public void setTestCases(Collection<TestResult> testCases) {
-        this.testCases = testCases;
+    public void setResults(Collection<TestResult> results) {
+        this.results = results;
     }
 }
