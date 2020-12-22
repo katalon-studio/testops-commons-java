@@ -1,6 +1,6 @@
 package com.katalon.testops.commons.helper;
 
-import com.katalon.testops.commons.logger.Logger;
+import org.slf4j.Logger;
 
 public class ExceptionHelper {
 

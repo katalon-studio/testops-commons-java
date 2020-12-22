@@ -9,6 +9,7 @@ import com.katalon.testops.commons.core.HttpClientBuilder;
 import com.katalon.testops.commons.helper.FileHelper;
 import com.katalon.testops.commons.helper.GeneratorHelper;
 import com.katalon.testops.commons.helper.LogHelper;
+import org.slf4j.Logger;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.file.Path;
@@ -19,6 +20,8 @@ import java.util.Optional;
 import static com.katalon.testops.commons.core.Constants.REPORT_PATTERN;
 
 public class TestOpsReportUploader implements ReportUploader {
+
+    private static final Logger logger = LogHelper.getLogger();
 
     private final TestOpsConnector testOpsConnector;
 
@@ -56,7 +59,7 @@ public class TestOpsReportUploader implements ReportUploader {
             uploadBatchFileResource.setEnd(isEnd);
             return Optional.of(uploadBatchFileResource);
         } catch (Exception e) {
-            LogHelper.getLogger().error(e);
+            logger.error("Error when uploading report", e);
             return Optional.empty();
         }
     }
