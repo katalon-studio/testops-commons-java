@@ -23,7 +23,7 @@ public class ReportLifecycle {
 
     private final ReportUploader reportUploader;
 
-    private final ThreadLocal<String> currentExecution = ThreadLocal.withInitial(GeneratorHelper::generateUniqueValue);
+    private String currentExecution = null;
 
     private final Collection<TestResult> testResults = new ConcurrentLinkedQueue<>();
 
@@ -65,9 +65,10 @@ public class ReportLifecycle {
     }
 
     public void startExecution() {
+        assignNewExecution();
         Execution execution = new Execution();
         execution.setStart(System.currentTimeMillis());
-        execution.setUuid(currentExecution.get());
+        execution.setUuid(currentExecution);
         reportStorage.put(execution.getUuid(), execution);
     }
 
@@ -104,8 +105,8 @@ public class ReportLifecycle {
     public void writeExecutionReport() {
         Optional<Execution> optionalExecution = getCurrentExecution();
         optionalExecution.ifPresent(reportGenerator::write);
-        reportStorage.remove(currentExecution.get());
-        currentExecution.remove();
+        reportStorage.remove(currentExecution);
+        resetCurrenExecution();
     }
 
     public void writeTestSuitesReport() {
@@ -128,8 +129,16 @@ public class ReportLifecycle {
         reportUploader.upload();
     }
 
+    private void assignNewExecution() {
+        currentExecution = GeneratorHelper.generateUniqueValue();
+    }
+
+    private void resetCurrenExecution() {
+        currentExecution = null;
+    }
+
     private Optional<Execution> getCurrentExecution() {
-        return reportStorage.get(currentExecution.get(), Execution.class);
+        return reportStorage.get(currentExecution, Execution.class);
     }
 
     private Status getExecutionStatusFromTestResults(Collection<TestResult> testResults) {
