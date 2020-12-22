@@ -108,7 +108,7 @@ public class ReportLifecycle {
         Optional<Execution> optionalExecution = getCurrentExecution();
         optionalExecution.ifPresent(reportGenerator::write);
         reportStorage.remove(currentExecution);
-        resetCurrenExecution();
+        resetCurrentExecution();
     }
 
     public void writeTestSuitesReport() {
@@ -139,7 +139,7 @@ public class ReportLifecycle {
         currentExecution = GeneratorHelper.generateUniqueValue();
     }
 
-    private void resetCurrenExecution() {
+    private void resetCurrentExecution() {
         currentExecution = null;
     }
 
