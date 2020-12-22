@@ -167,6 +167,11 @@
             <version>${sl4j-version}</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${sl4j-version}</version>
+        </dependency>
 
         <!-- HTTP client: Spring RestTemplate -->
         <dependency>
