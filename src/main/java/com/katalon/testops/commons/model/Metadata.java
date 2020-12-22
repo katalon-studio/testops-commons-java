@@ -8,6 +8,10 @@ public class Metadata implements IReport {
 
     private String version;
 
+    private String buildLabel;
+
+    private String buildUrl;
+
     public String getFramework() {
         return framework;
     }
@@ -30,5 +34,21 @@ public class Metadata implements IReport {
 
     public void setVersion(String version) {
         this.version = version;
+    }
+
+    public String getBuildLabel() {
+        return buildLabel;
+    }
+
+    public void setBuildLabel(String buildLabel) {
+        this.buildLabel = buildLabel;
+    }
+
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
     }
 }
