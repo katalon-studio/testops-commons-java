@@ -40,16 +40,28 @@ public class TestOpsReportUploader implements ReportUploader {
         String apiKey = configuration.getApiKey();
         if (apiKey == null || apiKey.isEmpty()) {
             logger.warn("\n" +
-                " --------------------------------------------------------------------------------- \n" +
-                "|                                                                                 |\n" +
-                "|     WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.     |\n" +
-                "|                                                                                 |\n" +
-                " --------------------------------------------------------------------------------- \n");
+                " ------------------------------------------------------------------------------------------------- \n" +
+                "|                                                                                                 |\n" +
+                "|     WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.                     |\n" +
+                "|     https://docs.katalon.com/katalon-analytics/docs/ka-api-key.html#katalon-api-keys-usage      |\n" +
+                "|                                                                                                 |\n" +
+                " ------------------------------------------------------------------------------------------------- \n");
+            return;
+        }
+
+        Long projectId = configuration.getProjectId();
+        if (projectId == null) {
+            logger.warn("\n" +
+                " --------------------------------------------------------------------------------------- \n" +
+                "|                                                                                       |\n" +
+                "|     WARNING: Missing Katalon TestOps Project ID. Reports will not be uploaded.        |\n" +
+                "|     https://docs.katalon.com/katalon-analytics/docs/setup-team.html#create-a-team     |\n" +
+                "|                                                                                       |\n" +
+                " --------------------------------------------------------------------------------------- \n");
             return;
         }
 
         Path reportFolder = configuration.getReportFolder();
-        Long projectId = configuration.getProjectId();
         List<Path> reportPaths = FileHelper.scanFiles(reportFolder, reportPattern);
         List<FileResource> uploadInfos = testOpsConnector.getUploadUrls(projectId, reportPaths.size());
         String batch = GeneratorHelper.generateUploadBatch();
