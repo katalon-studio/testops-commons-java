@@ -12,7 +12,7 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
     public Configuration createConfiguration() {
         Configuration configuration = new Configuration();
         configuration.setServerUrl(ParameterHelper.getOrDefault(TESTOPS_SERVER_URL, TESTOPS_SERVER_URL_DEFAULT));
-        configuration.setResultsDirectory(Paths.get(ParameterHelper.getOrDefault(TESTOPS_RESULTS_DIRECTORY, TESTOPS_RESULTS_DIRECTORY_DEFAULT)));
+        configuration.setResultsDirectory(Paths.get(ParameterHelper.getOrDefault(TESTOPS_REPORT_DIRECTORY, TESTOPS_REPORT_DIRECTORY_DEFAULT)));
         configuration.setApiKey(ParameterHelper.get(TESTOPS_API_KEY));
         configuration.setProjectId(Long.valueOf(ParameterHelper.get(TESTOPS_PROJECT_ID)));
         return configuration;
