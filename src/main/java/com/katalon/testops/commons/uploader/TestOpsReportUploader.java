@@ -39,7 +39,12 @@ public class TestOpsReportUploader implements ReportUploader {
     public void upload() {
         String apiKey = configuration.getApiKey();
         if (apiKey == null || apiKey.isEmpty()) {
-            logger.warn("WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.");
+            logger.warn("\n" +
+                " --------------------------------------------------------------------------------- \n" +
+                "|                                                                                 |\n" +
+                "|     WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.     |\n" +
+                "|                                                                                 |\n" +
+                " -------------------------------------------------------------------------------- \n");
             return;
         }
 
