@@ -14,6 +14,8 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
         configuration.setServerUrl(ParameterHelper.getOrDefault(TESTOPS_SERVER_URL, TESTOPS_SERVER_URL_DEFAULT));
         configuration.setReportFolder(Paths.get(ParameterHelper.getOrDefault(TESTOPS_REPORT_DIRECTORY, TESTOPS_REPORT_DIRECTORY_DEFAULT)));
         configuration.setApiKey(ParameterHelper.get(TESTOPS_API_KEY));
+        configuration.setBuildLabel(ParameterHelper.get(TESTOPS_BUILD_LABEL));
+        configuration.setBuildUrl(ParameterHelper.get(TESTOPS_BUILD_URL));
         String projectId = ParameterHelper.get(TESTOPS_PROJECT_ID);
         if (projectId != null && !projectId.isEmpty()) {
             configuration.setProjectId(Long.valueOf(projectId.trim()));

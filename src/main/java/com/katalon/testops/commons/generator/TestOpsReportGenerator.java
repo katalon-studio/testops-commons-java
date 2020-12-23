@@ -1,6 +1,7 @@
 package com.katalon.testops.commons.generator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.katalon.testops.commons.configuration.Configuration;
 import com.katalon.testops.commons.helper.ObjectMapperSingleton;
 import com.katalon.testops.commons.model.Execution;
 import com.katalon.testops.commons.model.Metadata;
@@ -19,7 +20,11 @@ public class TestOpsReportGenerator implements ReportGenerator {
 
     private final Path outputDirectory;
 
-    public TestOpsReportGenerator(Path outputDirectory) {
+    private final Configuration configuration;
+
+    public TestOpsReportGenerator(Configuration configuration) {
+        Path outputDirectory = configuration.getReportFolder();
+        this.configuration = configuration;
         this.objectMapper = ObjectMapperSingleton.getInstance();
         this.outputDirectory = outputDirectory;
         ensureDirectory(outputDirectory);
@@ -28,6 +33,10 @@ public class TestOpsReportGenerator implements ReportGenerator {
     @Override
     public void write(Metadata metadata) {
         try {
+            String buildLabel = configuration.getBuildLabel();
+            String buildUrl = configuration.getBuildUrl();
+            metadata.setBuildLabel(buildLabel);
+            metadata.setBuildUrl(buildUrl);
             write(metadata, "metadata" + REPORT_FILE_EXTENSION);
         } catch (IOException e) {
             throw new RuntimeException("Unable to write TestOps metadata", e);

@@ -3,16 +3,13 @@ package com.katalon.testops.commons;
 import com.katalon.testops.commons.configuration.Configuration;
 import com.katalon.testops.commons.configuration.ConfigurationCreator;
 import com.katalon.testops.commons.configuration.TestOpsConfigurationCreator;
-import com.katalon.testops.commons.core.Constants;
 import com.katalon.testops.commons.generator.ReportGenerator;
 import com.katalon.testops.commons.generator.TestOpsReportGenerator;
 import com.katalon.testops.commons.helper.GeneratorHelper;
-import com.katalon.testops.commons.helper.ParameterHelper;
 import com.katalon.testops.commons.model.*;
 import com.katalon.testops.commons.uploader.ReportUploader;
 import com.katalon.testops.commons.uploader.TestOpsReportUploader;
 
-import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -46,8 +43,7 @@ public class ReportLifecycle {
     }
 
     private static ReportGenerator createDefaultGenerator(Configuration configuration) {
-        Path outputDirectory = configuration.getReportFolder();
-        return new TestOpsReportGenerator(outputDirectory);
+        return new TestOpsReportGenerator(configuration);
     }
 
     private static ReportUploader createDefaultUploader(Configuration configuration) {
@@ -121,10 +117,6 @@ public class ReportLifecycle {
     }
 
     public void writeMetadata(Metadata metadata) {
-        String buildLabel = ParameterHelper.get(Constants.TESTOPS_BUILD_LABEL);
-        String buildUrl = ParameterHelper.get(Constants.TESTOPS_BUILD_URL);
-        metadata.setBuildLabel(buildLabel);
-        metadata.setBuildUrl(buildUrl);
         reportGenerator.write(metadata);
     }
 

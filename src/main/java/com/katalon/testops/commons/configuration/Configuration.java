@@ -12,6 +12,10 @@ public class Configuration {
 
     private Path reportFolder;
 
+    private String buildLabel;
+
+    private String buildUrl;
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -42,5 +46,21 @@ public class Configuration {
 
     public void setReportFolder(Path reportFolder) {
         this.reportFolder = reportFolder;
+    }
+
+    public String getBuildLabel() {
+        return buildLabel;
+    }
+
+    public void setBuildLabel(String buildLabel) {
+        this.buildLabel = buildLabel;
+    }
+
+    public String getBuildUrl() {
+        return buildUrl;
+    }
+
+    public void setBuildUrl(String buildUrl) {
+        this.buildUrl = buildUrl;
     }
 }
