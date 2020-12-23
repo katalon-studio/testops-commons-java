@@ -135,6 +135,12 @@ public class ReportLifecycle {
         reportUploader.upload();
     }
 
+    public void reset() {
+        clearTestResults();
+        clearSuites();
+        resetCurrentExecution();
+    }
+
     private void assignNewExecution() {
         currentExecution = GeneratorHelper.generateUniqueValue();
     }
