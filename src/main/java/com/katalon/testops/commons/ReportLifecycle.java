@@ -108,19 +108,16 @@ public class ReportLifecycle {
         Optional<Execution> optionalExecution = getCurrentExecution();
         optionalExecution.ifPresent(reportGenerator::write);
         reportStorage.remove(currentExecution);
-        resetCurrentExecution();
     }
 
     public void writeTestSuitesReport() {
         TestSuites testSuites = createTestSuites(suites);
         reportGenerator.write(testSuites);
-        clearSuites();
     }
 
     public void writeTestResultsReport() {
         TestResults testResults = createTestCases(this.testResults);
         reportGenerator.write(testResults);
-        clearTestResults();
     }
 
     public void writeMetadata(Metadata metadata) {
