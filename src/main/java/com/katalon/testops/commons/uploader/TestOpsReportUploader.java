@@ -44,7 +44,7 @@ public class TestOpsReportUploader implements ReportUploader {
                 "|                                                                                 |\n" +
                 "|     WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.     |\n" +
                 "|                                                                                 |\n" +
-                " -------------------------------------------------------------------------------- \n");
+                " --------------------------------------------------------------------------------- \n");
             return;
         }
 
