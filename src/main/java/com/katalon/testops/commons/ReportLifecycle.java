@@ -46,7 +46,7 @@ public class ReportLifecycle {
     }
 
     private static ReportGenerator getDefaultGenerator(Configuration configuration) {
-        Path outputDirectory = configuration.getResultsDirectory();
+        Path outputDirectory = configuration.getReportFolder();
         return new TestOpsReportGenerator(outputDirectory);
     }
 

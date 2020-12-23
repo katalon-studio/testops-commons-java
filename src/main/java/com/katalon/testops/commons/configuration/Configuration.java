@@ -10,7 +10,7 @@ public class Configuration {
 
     private Long projectId;
 
-    private Path resultsDirectory;
+    private Path reportFolder;
 
     public String getServerUrl() {
         return serverUrl;
@@ -36,11 +36,11 @@ public class Configuration {
         this.projectId = projectId;
     }
 
-    public Path getResultsDirectory() {
-        return resultsDirectory;
+    public Path getReportFolder() {
+        return reportFolder;
     }
 
-    public void setResultsDirectory(Path resultsDirectory) {
-        this.resultsDirectory = resultsDirectory;
+    public void setReportFolder(Path reportFolder) {
+        this.reportFolder = reportFolder;
     }
 }

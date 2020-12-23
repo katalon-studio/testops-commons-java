@@ -37,8 +37,16 @@ public class TestOpsReportUploader implements ReportUploader {
 
     @Override
     public void upload() {
-        List<Path> reportPaths = FileHelper.scanFiles(configuration.getResultsDirectory(), reportPattern);
-        List<FileResource> uploadInfos = testOpsConnector.getUploadUrls(configuration.getProjectId(), reportPaths.size());
+        String apiKey = configuration.getApiKey();
+        if (apiKey == null || apiKey.isEmpty()) {
+            logger.warn("WARNING: Missing Katalon TestOps API Key. Reports will not be uploaded.");
+            return;
+        }
+
+        Path reportFolder = configuration.getReportFolder();
+        Long projectId = configuration.getProjectId();
+        List<Path> reportPaths = FileHelper.scanFiles(reportFolder, reportPattern);
+        List<FileResource> uploadInfos = testOpsConnector.getUploadUrls(projectId, reportPaths.size());
         String batch = GeneratorHelper.generateUploadBatch();
         List<UploadBatchFileResource> uploadBatchFileResources = new ArrayList<>(reportPaths.size());
         for (int i = 0; i < reportPaths.size(); i++) {
@@ -46,7 +54,7 @@ public class TestOpsReportUploader implements ReportUploader {
             uploadFile(uploadInfos.get(i), reportPaths.get(i), isEnd)
                     .ifPresent(uploadBatchFileResources::add);
         }
-        testOpsConnector.uploadTestOpsReport(uploadBatchFileResources, configuration.getProjectId(), batch);
+        testOpsConnector.uploadTestOpsReport(uploadBatchFileResources, projectId, batch);
     }
 
     public Optional<UploadBatchFileResource> uploadFile(FileResource info, Path path, boolean isEnd) {
