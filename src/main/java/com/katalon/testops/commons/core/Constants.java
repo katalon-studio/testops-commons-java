@@ -18,7 +18,7 @@ public class Constants {
 
     public static final String TESTOPS_BUILD_URL = "testops.buildUrl";
 
-    public static final String TESTOPS_SERVER_URL_DEFAULT = "https://analytics.katalon.com";
+    public static final String TESTOPS_SERVER_URL_DEFAULT = "https://testops.katalon.io";
 
     public static final String TESTOPS_API_KEY = "testops.apiKey";
 
