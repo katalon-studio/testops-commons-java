@@ -25,18 +25,18 @@ public class ReportLifecycle {
 
     private final ReportUploader reportUploader;
 
-    private String currentExecution = null;
-
     private final Collection<TestResult> testResults = new ConcurrentLinkedQueue<>();
 
     private final Collection<TestSuite> suites = new ConcurrentLinkedQueue<>();
+
+    private String currentExecution = null;
 
     public ReportLifecycle() {
         ConfigurationCreator configurationCreator = new TestOpsConfigurationCreator();
         Configuration configuration = configurationCreator.createConfiguration();
         this.reportStorage = new ReportStorage();
-        this.reportGenerator = getDefaultGenerator(configuration);
-        this.reportUploader = getDefaultUploader(configuration);
+        this.reportGenerator = createDefaultGenerator(configuration);
+        this.reportUploader = createDefaultUploader(configuration);
     }
 
     public ReportLifecycle(ReportGenerator reportGenerator, ReportUploader reportUploader) {
@@ -45,12 +45,12 @@ public class ReportLifecycle {
         this.reportUploader = reportUploader;
     }
 
-    private static ReportGenerator getDefaultGenerator(Configuration configuration) {
+    private static ReportGenerator createDefaultGenerator(Configuration configuration) {
         Path outputDirectory = configuration.getReportFolder();
         return new TestOpsReportGenerator(outputDirectory);
     }
 
-    private static ReportUploader getDefaultUploader(Configuration configuration) {
+    private static ReportUploader createDefaultUploader(Configuration configuration) {
         return new TestOpsReportUploader(configuration);
     }
 
@@ -125,7 +125,7 @@ public class ReportLifecycle {
 
     public void writeMetadata(Metadata metadata) {
         String buildLabel = ParameterHelper.get(Constants.TESTOPS_BUILD_LABEL);
-        String buildUrl= ParameterHelper.get(Constants.TESTOPS_BUILD_URL);
+        String buildUrl = ParameterHelper.get(Constants.TESTOPS_BUILD_URL);
         metadata.setBuildLabel(buildLabel);
         metadata.setBuildUrl(buildUrl);
         reportGenerator.write(metadata);
@@ -141,14 +141,6 @@ public class ReportLifecycle {
         resetCurrentExecution();
     }
 
-    private void assignNewExecution() {
-        currentExecution = GeneratorHelper.generateUniqueValue();
-    }
-
-    private void resetCurrentExecution() {
-        currentExecution = null;
-    }
-
     private Optional<Execution> getCurrentExecution() {
         return reportStorage.get(currentExecution, Execution.class);
     }
@@ -160,6 +152,14 @@ public class ReportLifecycle {
         } else {
             return Status.PASSED;
         }
+    }
+
+    private void assignNewExecution() {
+        currentExecution = GeneratorHelper.generateUniqueValue();
+    }
+
+    private void resetCurrentExecution() {
+        currentExecution = null;
     }
 
     private void clearSuites() {
