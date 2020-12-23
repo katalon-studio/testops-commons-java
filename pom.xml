@@ -60,10 +60,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven-compiler-plugin.version}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
         </plugins>
@@ -172,37 +172,11 @@
             <artifactId>slf4j-simple</artifactId>
             <version>${sl4j-version}</version>
         </dependency>
-
-        <!-- HTTP client: Spring RestTemplate -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring-web-version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.github.joschi.jackson</groupId>
-            <artifactId>jackson-datatype-threetenbp</artifactId>
-            <version>${jackson-threetenbp-version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring-context-version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger.core.v3</groupId>
-            <artifactId>swagger-annotations</artifactId>
-            <version>${swagger-annotations-version}</version>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
             <version>${testng-version}</version>
-            <scope>compile</scope>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.katalon</groupId>
@@ -224,14 +198,8 @@
         <maven-gpg-plugin.version>1.6</maven-gpg-plugin.version>
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 
-        <testops-common-version>1.0.0</testops-common-version>
         <sl4j-version>1.7.30</sl4j-version>
-        <swagger-annotations-version>2.0.0</swagger-annotations-version>
-        <spring-web-version>5.2.12.RELEASE</spring-web-version>
-        <spring-context-version>5.2.12.RELEASE</spring-context-version>
         <jackson-version>2.12.0</jackson-version>
-        <jackson-threetenbp-version>2.6.4</jackson-threetenbp-version>
-        <junit-version>4.13.1</junit-version>
         <testng-version>7.3.0</testng-version>
         <testops-api-version>0.0.1-SNAPSHOT</testops-api-version>
     </properties>
