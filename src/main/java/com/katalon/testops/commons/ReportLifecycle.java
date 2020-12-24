@@ -26,6 +26,8 @@ public class ReportLifecycle {
 
     private final Collection<TestSuite> suites = new ConcurrentLinkedQueue<>();
 
+    private final ThreadLocal<String> currentTestResult = ThreadLocal.withInitial(GeneratorHelper::generateUniqueValue);
+
     private String currentExecution = null;
 
     public ReportLifecycle() {
@@ -77,7 +79,27 @@ public class ReportLifecycle {
         reportStorage.put(testSuite.getUuid(), testSuite);
     }
 
+    public void startTestCase() {
+        TestResult testResult = new TestResult();
+        testResult.setUuid(currentTestResult.get());
+        testResult.setStart(System.currentTimeMillis());
+        reportStorage.put(testResult.getUuid(), testResult);
+    }
+
     public void stopTestCase(TestResult testResult) {
+        Optional<TestResult> optionalRunningTestResult = getCurrentRunningTestResult();
+        optionalRunningTestResult.ifPresent(runningTestResult -> {
+            if (testResult.getStart() != null) {
+                testResult.setStart(runningTestResult.getStart());
+            }
+            if (testResult.getStop() != null) {
+                testResult.setStop(System.currentTimeMillis());
+            }
+            if (testResult.getDuration() != null) {
+                testResult.setDuration(testResult.getStop() - testResult.getStart());
+            }
+            clearCurrentTestResult();
+        });
         testResults.add(testResult);
     }
 
@@ -134,6 +156,10 @@ public class ReportLifecycle {
         return reportStorage.get(currentExecution, Execution.class);
     }
 
+    private Optional<TestResult> getCurrentRunningTestResult() {
+        return reportStorage.get(currentTestResult.get(), TestResult.class);
+    }
+
     private Status getExecutionStatusFromTestResults(Collection<TestResult> testResults) {
         boolean failed = testResults.stream().map(TestResult::getStatus).anyMatch(Status::isFailed);
         if (failed) {
@@ -149,6 +175,11 @@ public class ReportLifecycle {
 
     private void resetCurrentExecution() {
         currentExecution = null;
+    }
+
+    private void clearCurrentTestResult() {
+        reportStorage.remove(currentTestResult.get());
+        currentTestResult.remove();
     }
 
     private void clearSuites() {
