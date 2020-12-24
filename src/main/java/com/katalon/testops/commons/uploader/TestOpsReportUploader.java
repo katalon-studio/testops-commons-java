@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.katalon.testops.commons.core.Constants.REPORT_PATTERN;
@@ -38,7 +39,7 @@ public class TestOpsReportUploader implements ReportUploader {
     @Override
     public void upload() {
         String apiKey = configuration.getApiKey();
-        if (apiKey == null || apiKey.isEmpty()) {
+        if (Objects.isNull(apiKey) || apiKey.isEmpty()) {
             logger.warn("\n" +
                 " ------------------------------------------------------------------------------------------------- \n" +
                 "|                                                                                                 |\n" +
@@ -50,7 +51,7 @@ public class TestOpsReportUploader implements ReportUploader {
         }
 
         Long projectId = configuration.getProjectId();
-        if (projectId == null) {
+        if (Objects.isNull(projectId)) {
             logger.warn("\n" +
                 " --------------------------------------------------------------------------------------- \n" +
                 "|                                                                                       |\n" +

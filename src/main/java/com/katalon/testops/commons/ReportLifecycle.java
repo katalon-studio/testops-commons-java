@@ -11,6 +11,7 @@ import com.katalon.testops.commons.uploader.ReportUploader;
 import com.katalon.testops.commons.uploader.TestOpsReportUploader;
 
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -89,13 +90,13 @@ public class ReportLifecycle {
     public void stopTestCase(TestResult testResult) {
         Optional<TestResult> optionalRunningTestResult = getCurrentRunningTestResult();
         optionalRunningTestResult.ifPresent(runningTestResult -> {
-            if (testResult.getStart() != null) {
+            if (Objects.isNull(testResult.getStart())) {
                 testResult.setStart(runningTestResult.getStart());
             }
-            if (testResult.getStop() != null) {
+            if (Objects.isNull(testResult.getStop())) {
                 testResult.setStop(System.currentTimeMillis());
             }
-            if (testResult.getDuration() != null) {
+            if (Objects.isNull(testResult.getDuration())) {
                 testResult.setDuration(testResult.getStop() - testResult.getStart());
             }
             clearCurrentTestResult();
