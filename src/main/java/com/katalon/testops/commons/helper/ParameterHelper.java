@@ -1,5 +1,7 @@
 package com.katalon.testops.commons.helper;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -17,6 +19,14 @@ public class ParameterHelper {
 
     public static String getOrDefault(String key, String defaultValue) {
         return properties.getProperty(key, defaultValue);
+    }
+
+    public static String getOrDefaultIfBlank(String key, String defaultValue) {
+        String value = properties.getProperty(key);
+        if (StringUtils.isBlank(value)) {
+            value = defaultValue;
+        }
+        return value;
     }
 
     public static void set(String key, String value) {

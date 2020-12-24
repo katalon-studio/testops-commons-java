@@ -11,13 +11,13 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
     @Override
     public Configuration createConfiguration() {
         Configuration configuration = new Configuration();
-        configuration.setServerUrl(ParameterHelper.getOrDefault(TESTOPS_SERVER_URL, TESTOPS_SERVER_URL_DEFAULT));
-        configuration.setReportFolder(Paths.get(ParameterHelper.getOrDefault(TESTOPS_REPORT_DIRECTORY, TESTOPS_REPORT_DIRECTORY_DEFAULT)));
+        configuration.setServerUrl(ParameterHelper.getOrDefaultIfBlank(TESTOPS_SERVER_URL, TESTOPS_SERVER_URL_DEFAULT));
+        configuration.setReportFolder(Paths.get(ParameterHelper.getOrDefaultIfBlank(TESTOPS_REPORT_DIRECTORY, TESTOPS_REPORT_DIRECTORY_DEFAULT)));
         configuration.setApiKey(ParameterHelper.get(TESTOPS_API_KEY));
         configuration.setBuildLabel(ParameterHelper.get(TESTOPS_BUILD_LABEL));
         configuration.setBuildUrl(ParameterHelper.get(TESTOPS_BUILD_URL));
-        String projectId = ParameterHelper.get(TESTOPS_PROJECT_ID);
-        if (projectId != null && !projectId.isEmpty()) {
+        String projectId = ParameterHelper.getOrDefaultIfBlank(TESTOPS_PROJECT_ID, null);
+        if (projectId != null) {
             configuration.setProjectId(Long.valueOf(projectId.trim()));
         }
         return configuration;
