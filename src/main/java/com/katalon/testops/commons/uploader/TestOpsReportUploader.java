@@ -55,11 +55,12 @@ public class TestOpsReportUploader implements ReportUploader {
                 " --------------------------------------------------------------------------------------- \n" +
                 "|                                                                                       |\n" +
                 "|     WARNING: Missing Katalon TestOps Project ID. Reports will not be uploaded.        |\n" +
-                "|     https://docs.katalon.com/katalon-analytics/docs/setup-team.html#create-a-team     |\n" +
                 "|                                                                                       |\n" +
                 " --------------------------------------------------------------------------------------- \n");
             return;
         }
+
+        logger.info("Start uploading testops report");
 
         Path reportFolder = configuration.getReportFolder();
         List<Path> reportPaths = FileHelper.scanFiles(reportFolder, reportPattern);

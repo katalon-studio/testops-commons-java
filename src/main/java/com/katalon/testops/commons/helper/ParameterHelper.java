@@ -1,11 +1,15 @@
 package com.katalon.testops.commons.helper;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Properties;
 
 public class ParameterHelper {
+
+    private static final Logger logger = LogHelper.getLogger();
 
     private static Properties properties;
 
@@ -37,13 +41,24 @@ public class ParameterHelper {
 
     private static void loadParameters() {
         properties = new Properties();
+
         String filePath = "testops.properties";
-        try (InputStream inputStream = ParameterHelper.class.getClassLoader().getResourceAsStream(filePath)) {
-            properties.load(inputStream);
-        } catch (Exception ex) {
-            LogHelper.getLogger().error("Fail to load properties from " + filePath, ex);
+        URL url = ParameterHelper.class.getClassLoader().getResource(filePath);
+        if (url != null) {
+            logger.info("Load properties from {}", filePath);
+            try (InputStream inputStream = url.openStream()) {
+                properties.load(inputStream);
+            } catch (Exception ex) {
+                logger.error("Fail to load properties from " + filePath, ex);
+            }
+        } else {
+            logger.info("Cannot find {} file", filePath);
         }
+
+        logger.info("Load properties from system environment variable");
         properties.putAll(System.getenv());
+
+        logger.info("Load properties from system properties");
         properties.putAll(System.getProperties());
     }
 }
