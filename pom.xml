@@ -6,7 +6,7 @@
 
     <groupId>com.katalon</groupId>
     <artifactId>testops-commons</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <url>https://github.com/katalon-studio/testops-commons-java</url>
     <description>Katalon TestOps SDK</description>
 
@@ -173,17 +173,17 @@
         </profile>
     </profiles>
 
-    <repositories>
-        <repository>
-            <id>oss-sonatype</id>
-            <name>oss-sonatype</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
-        </repository>
-    </repositories>
+<!--    <repositories>-->
+<!--        <repository>-->
+<!--            <id>oss-sonatype</id>-->
+<!--            <name>oss-sonatype</name>-->
+<!--            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>-->
+<!--            <snapshots>-->
+<!--                <enabled>true</enabled>-->
+<!--                <updatePolicy>always</updatePolicy>-->
+<!--            </snapshots>-->
+<!--        </repository>-->
+<!--    </repositories>-->
 
     <dependencies>
         <dependency>
@@ -238,6 +238,6 @@
         <jackson-version>2.12.0</jackson-version>
         <testng-version>7.3.0</testng-version>
         <apache-commons-version>3.11</apache-commons-version>
-        <testops-api-version>0.0.1-SNAPSHOT</testops-api-version>
+        <testops-api-version>1.0.0</testops-api-version>
     </properties>
 </project>
