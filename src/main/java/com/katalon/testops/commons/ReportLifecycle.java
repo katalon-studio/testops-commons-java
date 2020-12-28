@@ -15,6 +15,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import static com.katalon.testops.commons.helper.StringHelper.getHostName;
+import static com.katalon.testops.commons.helper.StringHelper.getThreadName;
+
 public class ReportLifecycle {
 
     private final ReportStorage reportStorage;
@@ -101,6 +104,8 @@ public class ReportLifecycle {
             }
             clearCurrentTestResult();
         });
+        testResult.setThread(getThreadName());
+        testResult.setHost(getHostName());
         testResults.add(testResult);
     }
 
@@ -109,6 +114,8 @@ public class ReportLifecycle {
         optionalTestSuite.ifPresent(testSuite -> {
             testSuite.setStop(System.currentTimeMillis());
             testSuite.setDuration(testSuite.getStop() - testSuite.getStart());
+            testSuite.setThread(getThreadName());
+            testSuite.setHost(getHostName());
             suites.add(reportStorage.put(uuid, testSuite));
         });
     }
@@ -119,6 +126,8 @@ public class ReportLifecycle {
             execution.setStop(System.currentTimeMillis());
             execution.setDuration(execution.getStop() - execution.getStart());
             execution.setStatus(getExecutionStatusFromTestResults(testResults));
+            execution.setThread(getThreadName());
+            execution.setHost(getHostName());
             reportStorage.put(execution.getUuid(), execution);
         });
     }
