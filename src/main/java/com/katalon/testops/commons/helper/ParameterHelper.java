@@ -17,16 +17,31 @@ public class ParameterHelper {
         loadParameters();
     }
 
+    public static String convertKey(String key) {
+        return key.toUpperCase().replace(".", "_");
+    }
+
     public static String get(String key) {
+        String keyConverted = convertKey(key);
+        String value = properties.getProperty(keyConverted);
+        if (!StringUtils.isBlank(value)) {
+            return value;
+        }
         return properties.getProperty(key);
     }
 
     public static String getOrDefault(String key, String defaultValue) {
+        String keyConverted = convertKey(key);
+        String value = properties.getProperty(keyConverted, defaultValue);
+        if (!value.equals(defaultValue)) {
+            return value;
+        }
         return properties.getProperty(key, defaultValue);
     }
 
     public static String getOrDefaultIfBlank(String key, String defaultValue) {
-        String value = properties.getProperty(key);
+        String value = get(key);
+
         if (StringUtils.isBlank(value)) {
             value = defaultValue;
         }
