@@ -24,10 +24,10 @@ public class ParameterHelper {
     public static String get(String key) {
         String environmentName = toEnvironmentName(key);
         String value = properties.getProperty(environmentName);
-        if (!StringUtils.isBlank(value)) {
-            return value;
+        if (StringUtils.isBlank(value)) {
+            value = properties.getProperty(key);
         }
-        return properties.getProperty(key);
+        return value;
     }
 
     public static String getOrDefaultIfBlank(String key, String defaultValue) {
