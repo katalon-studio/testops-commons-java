@@ -1,5 +1,6 @@
 package com.katalon.testops.commons.configuration;
 
+import com.katalon.testops.commons.configuration.proxy.ProxyInformationBuilder;
 import com.katalon.testops.commons.helper.ParameterHelper;
 
 import java.nio.file.Paths;
@@ -20,6 +21,7 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
         if (projectId != null) {
             configuration.setProjectId(Long.valueOf(projectId.trim()));
         }
+        configuration.setProxyInformation(ProxyInformationBuilder.create().build());
         return configuration;
     }
 }
