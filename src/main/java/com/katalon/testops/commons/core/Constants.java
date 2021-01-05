@@ -23,4 +23,16 @@ public class Constants {
     public static final String TESTOPS_API_KEY = "testops.apiKey";
 
     public static final String REPORT_PATTERN = ".*(?i)\\.json";
+
+    public static final String TESTOPS_PROXY_OPTION = "testops.proxy.option";
+
+    public static final String TESTOPS_PROXY_SERVER_TYPE = "testops.proxy.serverType";
+
+    public static final String TESTOPS_PROXY_HOST = "testops.proxy.serverAddress";
+
+    public static final String TESTOPS_PROXY_PORT = "testops.proxy.serverPort";
+
+    public static final String TESTOPS_PROXY_USERNAME = "testops.proxy.username";
+
+    public static final String TESTOPS_PROXY_PASSWORD = "testops.proxy.password";
 }
