@@ -1,6 +1,13 @@
 package com.katalon.testops.commons.model;
 
+import com.katalon.testops.commons.helper.StringHelper;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class TestResult implements IReport, WithUuid {
 
@@ -18,15 +25,17 @@ public class TestResult implements IReport, WithUuid {
 
     private Status status;
 
-    private String errorMessage;
-
-    private String stackTrace;
+    private List<Error> errors = new ArrayList<>();
 
     private Long start;
 
     private Long stop;
 
     private Long duration;
+
+    private String thread;
+
+    private String host;
 
     @Override
     public String getUuid() {
@@ -86,22 +95,6 @@ public class TestResult implements IReport, WithUuid {
         this.status = status;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-
-    public String getStackTrace() {
-        return stackTrace;
-    }
-
-    public void setStackTrace(String stackTrace) {
-        this.stackTrace = stackTrace;
-    }
-
     public Long getStart() {
         return start;
     }
@@ -124,5 +117,36 @@ public class TestResult implements IReport, WithUuid {
 
     public void setDuration(Long duration) {
         this.duration = duration;
+    }
+
+    public String getThread() {
+        return thread;
+    }
+
+    public void setThread(String thread) {
+        this.thread = thread;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public void addError(final Throwable throwable) {
+        String message = StringHelper.getErrorMessage(throwable);
+        String stackTrace = StringHelper.getStackTraceAsString(throwable);
+        addError(message, stackTrace);
+
+    }
+
+    public void addError(String message, String stackTrace) {
+        Error error = new Error();
+        error.setMessage(message);
+        error.setStackTrace(stackTrace);
+        errors.add(error);
+
     }
 }

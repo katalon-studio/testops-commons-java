@@ -18,6 +18,10 @@ public class TestSuite implements IReport, WithUuid {
 
     private Long duration;
 
+    private String thread;
+
+    private String host;
+
     @Override
     public String getUuid() {
         return uuid;
@@ -82,5 +86,21 @@ public class TestSuite implements IReport, WithUuid {
 
     public void setDuration(Long duration) {
         this.duration = duration;
+    }
+
+    public String getThread() {
+        return thread;
+    }
+
+    public void setThread(String thread) {
+        this.thread = thread;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
     }
 }

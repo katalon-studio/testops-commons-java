@@ -2,6 +2,9 @@ package com.katalon.testops.commons.helper;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.management.ManagementFactory;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Objects;
 import java.util.Optional;
@@ -47,5 +50,20 @@ public class StringHelper {
     public static String getErrorMessage(final Throwable throwable) {
         return Optional.ofNullable(throwable.getMessage())
                 .orElse(throwable.getClass().getName());
+    }
+
+    public static String getThreadName() {
+        return String.format("%s.%s(%s)",
+                ManagementFactory.getRuntimeMXBean().getName(),
+                Thread.currentThread().getName(),
+                Thread.currentThread().getId());
+    }
+
+    public static String getHostName() {
+        try {
+            return InetAddress.getLocalHost().getHostName();
+        } catch (UnknownHostException e) {
+            return "default";
+        }
     }
 }
