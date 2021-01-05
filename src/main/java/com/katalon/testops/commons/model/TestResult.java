@@ -1,5 +1,7 @@
 package com.katalon.testops.commons.model;
 
+import com.katalon.testops.commons.helper.StringHelper;
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -134,8 +136,8 @@ public class TestResult implements IReport, WithUuid {
     }
 
     public void addError(final Throwable throwable) {
-        String message = getErrorMessage(throwable);
-        String stackTrace = getStackTraceAsString(throwable);
+        String message = StringHelper.getErrorMessage(throwable);
+        String stackTrace = StringHelper.getStackTraceAsString(throwable);
         addError(message, stackTrace);
 
     }
@@ -146,16 +148,5 @@ public class TestResult implements IReport, WithUuid {
         error.setStackTrace(stackTrace);
         errors.add(error);
 
-    }
-
-    private String getStackTraceAsString(final Throwable throwable) {
-        final StringWriter stringWriter = new StringWriter();
-        throwable.printStackTrace(new PrintWriter(stringWriter));
-        return stringWriter.toString();
-    }
-
-    private String getErrorMessage(final Throwable throwable) {
-        return Optional.ofNullable(throwable.getMessage())
-            .orElse(throwable.getClass().getName());
     }
 }
