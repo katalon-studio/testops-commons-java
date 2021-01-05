@@ -94,6 +94,7 @@ public class TestOpsReportUploader implements ReportUploader {
     protected ApiClient createApiClient() {
         RestTemplate restTemplate = HttpClientBuilder
                 .create()
+                .setProxyInformation(configuration.getProxyInformation())
                 .build();
         ApiClient apiClient = new ApiClient(restTemplate);
         apiClient.setPassword(configuration.getApiKey());

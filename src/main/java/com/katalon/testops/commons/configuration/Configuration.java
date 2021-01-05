@@ -1,5 +1,7 @@
 package com.katalon.testops.commons.configuration;
 
+import com.katalon.testops.commons.configuration.proxy.ProxyInformation;
+
 import java.nio.file.Path;
 
 public class Configuration {
@@ -15,6 +17,8 @@ public class Configuration {
     private String buildLabel;
 
     private String buildUrl;
+
+    private ProxyInformation proxyInformation;
 
     public String getServerUrl() {
         return serverUrl;
@@ -62,5 +66,13 @@ public class Configuration {
 
     public void setBuildUrl(String buildUrl) {
         this.buildUrl = buildUrl;
+    }
+
+    public ProxyInformation getProxyInformation() {
+        return proxyInformation;
+    }
+
+    public void setProxyInformation(ProxyInformation proxyInformation) {
+        this.proxyInformation = proxyInformation;
     }
 }
