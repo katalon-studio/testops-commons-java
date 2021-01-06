@@ -27,6 +27,8 @@ public class TestResult implements IReport, WithUuid {
 
     private List<Error> errors = new ArrayList<>();
 
+    private List<Error> failures = new ArrayList<>();
+
     private Long start;
 
     private Long stop;
@@ -135,6 +137,22 @@ public class TestResult implements IReport, WithUuid {
         this.host = host;
     }
 
+    public List<Error> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<Error> errors) {
+        this.errors = errors;
+    }
+
+    public List<Error> getFailures() {
+        return failures;
+    }
+
+    public void setFailures(List<Error> failures) {
+        this.failures = failures;
+    }
+
     public void addError(final Throwable throwable) {
         String message = StringHelper.getErrorMessage(throwable);
         String stackTrace = StringHelper.getStackTraceAsString(throwable);
@@ -147,6 +165,19 @@ public class TestResult implements IReport, WithUuid {
         error.setMessage(message);
         error.setStackTrace(stackTrace);
         errors.add(error);
+    }
 
+    public void addFailure(final Throwable throwable) {
+        String message = StringHelper.getErrorMessage(throwable);
+        String stackTrace = StringHelper.getStackTraceAsString(throwable);
+        addError(message, stackTrace);
+
+    }
+
+    public void addFailure(String message, String stackTrace) {
+        Error error = new Error();
+        error.setMessage(message);
+        error.setStackTrace(stackTrace);
+        errors.add(error);
     }
 }
