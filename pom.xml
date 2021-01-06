@@ -6,7 +6,7 @@
 
     <groupId>com.katalon</groupId>
     <artifactId>testops-commons</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1</version>
     <name>TestOps Commons</name>
     <url>https://github.com/katalon-studio/testops-commons-java</url>
     <description>Katalon TestOps SDK</description>
