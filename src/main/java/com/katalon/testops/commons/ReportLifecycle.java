@@ -3,12 +3,15 @@ package com.katalon.testops.commons;
 import com.katalon.testops.commons.configuration.Configuration;
 import com.katalon.testops.commons.configuration.ConfigurationCreator;
 import com.katalon.testops.commons.configuration.TestOpsConfigurationCreator;
+import com.katalon.testops.commons.configuration.proxy.ProxyInformation;
 import com.katalon.testops.commons.generator.ReportGenerator;
 import com.katalon.testops.commons.generator.TestOpsReportGenerator;
 import com.katalon.testops.commons.helper.GeneratorHelper;
+import com.katalon.testops.commons.helper.LogHelper;
 import com.katalon.testops.commons.model.*;
 import com.katalon.testops.commons.uploader.ReportUploader;
 import com.katalon.testops.commons.uploader.TestOpsReportUploader;
+import org.slf4j.Logger;
 
 import java.util.Collection;
 import java.util.Objects;
@@ -19,6 +22,8 @@ import static com.katalon.testops.commons.helper.StringHelper.getHostName;
 import static com.katalon.testops.commons.helper.StringHelper.getThreadName;
 
 public class ReportLifecycle {
+
+    private static final Logger logger = LogHelper.getLogger();
 
     private final ReportStorage reportStorage;
 
@@ -37,6 +42,21 @@ public class ReportLifecycle {
     public ReportLifecycle() {
         ConfigurationCreator configurationCreator = new TestOpsConfigurationCreator();
         Configuration configuration = configurationCreator.createConfiguration();
+        logger.info("--------------- TestOps Configuration --------------");
+        logger.info("Server URL: " + configuration.getServerUrl());
+        logger.info("Project ID: " + configuration.getProjectId());
+        logger.info("API Key: {}", configuration.getApiKey() != null);
+
+        ProxyInformation proxyInformation = configuration.getProxyInformation();
+        if (proxyInformation != null) {
+            logger.info("Proxy Option: " + proxyInformation.getProxyOption());
+            logger.info("Proxy Server Type: " + proxyInformation.getProxyServerType());
+            logger.info("Proxy Host: " + proxyInformation.getHost());
+            logger.info("Proxy Port: " + proxyInformation.getPort());
+            logger.info("Proxy Username: " + proxyInformation.getUsername());
+            logger.info("Proxy Password: {}",  proxyInformation.getPassword() != null);
+        }
+        logger.info("--------------- TestOps Configuration --------------");
         this.reportStorage = new ReportStorage();
         this.reportGenerator = createDefaultGenerator(configuration);
         this.reportUploader = createDefaultUploader(configuration);

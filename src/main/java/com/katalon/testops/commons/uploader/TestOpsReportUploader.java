@@ -74,6 +74,8 @@ public class TestOpsReportUploader implements ReportUploader {
                     .ifPresent(uploadBatchFileResources::add);
         }
         testOpsConnector.uploadTestOpsReport(uploadBatchFileResources, projectId, batch);
+
+        logger.info("Finish uploading report");
     }
 
     public Optional<UploadBatchFileResource> uploadFile(FileResource info, Path path, boolean isEnd) {
@@ -84,6 +86,7 @@ public class TestOpsReportUploader implements ReportUploader {
             uploadBatchFileResource.setFolderPath(path.getParent().toString());
             uploadBatchFileResource.setUploadedPath(info.getPath());
             uploadBatchFileResource.setEnd(isEnd);
+            logger.info("Finish uploading file: " + uploadBatchFileResource.getFolderPath() + "/" + uploadBatchFileResource.getFileName());
             return Optional.of(uploadBatchFileResource);
         } catch (Exception e) {
             logger.error("Error when uploading report", e);
