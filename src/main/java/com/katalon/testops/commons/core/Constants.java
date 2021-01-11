@@ -35,4 +35,6 @@ public class Constants {
     public static final String TESTOPS_PROXY_USERNAME = "testops.proxy.username";
 
     public static final String TESTOPS_PROXY_PASSWORD = "testops.proxy.password";
+
+    public static final String TESTOPS_SESSION_ID = "testops.sessionId";
 }

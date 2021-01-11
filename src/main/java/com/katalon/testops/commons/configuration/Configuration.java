@@ -20,6 +20,8 @@ public class Configuration {
 
     private ProxyInformation proxyInformation;
 
+    private String sessionId;
+
     public String getServerUrl() {
         return serverUrl;
     }
@@ -74,5 +76,13 @@ public class Configuration {
 
     public void setProxyInformation(ProxyInformation proxyInformation) {
         this.proxyInformation = proxyInformation;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

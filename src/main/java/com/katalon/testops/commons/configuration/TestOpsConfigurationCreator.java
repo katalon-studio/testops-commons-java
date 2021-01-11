@@ -22,6 +22,7 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
             configuration.setProjectId(Long.valueOf(projectId.trim()));
         }
         configuration.setProxyInformation(ProxyInformationBuilder.create().build());
+        configuration.setSessionId(ParameterHelper.get(TESTOPS_SESSION_ID));
         return configuration;
     }
 }
