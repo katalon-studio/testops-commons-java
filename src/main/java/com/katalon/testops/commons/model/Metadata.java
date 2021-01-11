@@ -12,6 +12,8 @@ public class Metadata implements IReport {
 
     private String buildUrl;
 
+    private String sessionId;
+
     public String getFramework() {
         return framework;
     }
@@ -50,5 +52,13 @@ public class Metadata implements IReport {
 
     public void setBuildUrl(String buildUrl) {
         this.buildUrl = buildUrl;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

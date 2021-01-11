@@ -35,8 +35,10 @@ public class TestOpsReportGenerator implements ReportGenerator {
         try {
             String buildLabel = configuration.getBuildLabel();
             String buildUrl = configuration.getBuildUrl();
+            String sessionId = configuration.getSessionId();
             metadata.setBuildLabel(buildLabel);
             metadata.setBuildUrl(buildUrl);
+            metadata.setSessionId(sessionId);
             write(metadata, "metadata" + REPORT_FILE_EXTENSION);
         } catch (IOException e) {
             throw new RuntimeException("Unable to write TestOps metadata", e);
