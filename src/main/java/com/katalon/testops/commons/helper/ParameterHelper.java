@@ -18,7 +18,7 @@ public class ParameterHelper {
     }
 
     public static String toEnvironmentName(String key) {
-        return key.toUpperCase().replace(".", "_");
+        return key.toUpperCase().replace(".", "_").replace("-", "_");
     }
 
     public static String get(String key) {
