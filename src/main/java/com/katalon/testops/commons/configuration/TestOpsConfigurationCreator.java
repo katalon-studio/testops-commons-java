@@ -1,6 +1,7 @@
 package com.katalon.testops.commons.configuration;
 
 import com.katalon.testops.commons.configuration.proxy.ProxyInformationBuilder;
+import com.katalon.testops.commons.helper.GeneratorHelper;
 import com.katalon.testops.commons.helper.ParameterHelper;
 
 import java.nio.file.Paths;
@@ -22,7 +23,7 @@ public class TestOpsConfigurationCreator implements ConfigurationCreator {
             configuration.setProjectId(Long.valueOf(projectId.trim()));
         }
         configuration.setProxyInformation(ProxyInformationBuilder.create().build());
-        configuration.setSessionId(ParameterHelper.get(TESTOPS_SESSION_ID));
+        configuration.setSessionId(ParameterHelper.getOrDefaultIfBlank(TESTOPS_SESSION_ID, GeneratorHelper.generateUniqueValue()));
         return configuration;
     }
 }
