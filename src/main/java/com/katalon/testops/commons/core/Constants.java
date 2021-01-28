@@ -28,7 +28,7 @@ public class Constants {
 
     public static final String TESTOPS_PROXY_SERVER_TYPE = "testops.proxy.server-type";
 
-    public static final String TESTOPS_PROXY_HOST = "testops.proxy.serve-address";
+    public static final String TESTOPS_PROXY_HOST = "testops.proxy.server-address";
 
     public static final String TESTOPS_PROXY_PORT = "testops.proxy.server-port";
 
