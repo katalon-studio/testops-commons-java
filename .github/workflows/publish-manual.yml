@@ -33,9 +33,10 @@ jobs:
         run: |
           set -x
           echo $GPG_PRIVATE_KEY | base64 --decode | gpg --import --no-tty --batch --yes
-          mvn --settings settings.xml clean deploy -DskipTests=true
+          mvn --settings settings.xml clean deploy -DskipTests=true -P release
+          mvn nexus-staging:release -P release --settings settings.xml
 
-      - name: Upload release maven package in Github
+      - name: Upload maven package in Github
         shell: bash
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
