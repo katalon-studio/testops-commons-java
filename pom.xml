@@ -247,7 +247,7 @@
         <nexus-staging-maven-plugin.version>1.6.8</nexus-staging-maven-plugin.version>
 
         <sl4j-version>1.7.30</sl4j-version>
-        <jackson-version>2.12.2</jackson-version>
+        <jackson-version>2.14.0</jackson-version>
         <testng-version>7.3.0</testng-version>
         <apache-commons-version>3.12.0</apache-commons-version>
         <apache-httpclient-version>4.5.13</apache-httpclient-version>
